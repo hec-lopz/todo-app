@@ -1,18 +1,19 @@
 import React from "react";
-import styled from "styled-components";
 
-const Title = styled.h1``;
+import { Wrapper, Title, SwitchButton } from "./HeaderStyles";
 
-const Wrapper = styled.header`
-  display: flex;
-  justify-content: space-between;
-  background-color: ${(props) => props.theme.colors.white};
-`;
-
-export const Header = () => {
+export const Header = ({ darkMode, handleClick }) => {
   return (
     <Wrapper>
-      <Title>TODO</Title>
+      <Title>
+        <img src="/images/TODO.svg" alt="To Do app logo" />
+      </Title>
+      <SwitchButton onClick={handleClick}>
+        <img
+          src={darkMode ? "/images/icon-sun.svg" : "/images/icon-moon.svg"}
+          alt={darkMode ? "Switch dark mode off" : "Switch dark mode on"}
+        />
+      </SwitchButton>
     </Wrapper>
   );
 };

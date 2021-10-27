@@ -8,11 +8,13 @@ import { Header } from "./Header";
 export const App = () => {
   const [darkMode, setDarkMode] = useState(false);
 
+  const handleClick = () => setDarkMode(!darkMode);
+
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <GlobalStyle />
-      <Header />
-      <button onClick={() => setDarkMode(!darkMode)}>DarkMode</button>
+      <Header darkMode={darkMode} handleClick={handleClick} />
+      {/* <button onClick={() => setDarkMode(!darkMode)}>DarkMode</button> */}
     </ThemeProvider>
   );
 };

@@ -32,18 +32,5 @@ export const GlobalStyle = createGlobalStyle`
     background-repeat: no-repeat;
     background-attachment: fixed;
 
-    ${
-      "" /* &::before {
-      content: "";
-      display: block;
-      position: fixed;
-      z-index: 0;
-      height: 20rem;
-      width: 100%;
-    } */
-    }
-    & #root {
-      z-index: 10;
-    }
   }
 `;
