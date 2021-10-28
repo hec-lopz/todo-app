@@ -2,7 +2,7 @@ import React from "react";
 
 import { Wrapper, Title, SwitchButton } from "./HeaderStyles";
 
-export const Header = ({ darkMode, handleClick }) => {
+const Header = ({ darkMode, handleClick }) => {
   return (
     <Wrapper>
       <Title>
@@ -17,3 +17,5 @@ export const Header = ({ darkMode, handleClick }) => {
     </Wrapper>
   );
 };
+
+export default Header;

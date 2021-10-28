@@ -3,7 +3,12 @@ import { ThemeProvider } from "styled-components";
 
 import { GlobalStyle } from "../styles/GlobalStyle";
 import { lightTheme, darkTheme } from "../styles/themes/styleVariables";
-import { Header } from "./Header";
+
+import CreateToDo from "./CreateToDo";
+import Header from "./Header";
+import ToDoList from "./ToDoList";
+import ToDoItem from "./ToDoItem";
+import Filter from "./Filter";
 
 export const App = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -14,7 +19,11 @@ export const App = () => {
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <GlobalStyle />
       <Header darkMode={darkMode} handleClick={handleClick} />
-      {/* <button onClick={() => setDarkMode(!darkMode)}>DarkMode</button> */}
+      <CreateToDo />
+      <ToDoList>
+        <ToDoItem />
+      </ToDoList>
+      <Filter />
     </ThemeProvider>
   );
 };

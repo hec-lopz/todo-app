@@ -22,12 +22,17 @@ export const darkTheme = {
     secondary: "#767992",
     grayed: "#4D5067",
   },
+  listItem: {
+    background: "#25273D",
+    border: "#393A4B",
+  },
 };
 
 export const lightTheme = {
   ...globalVariables,
   background: {
     color: "#F2F2F2",
+    listItem: "FFFFFF",
     desktopImage: 'url("/images/bg-desktop-light.jpg")',
     mobileImage: 'url("/images/bg-mobile-light.jpg")',
   },
@@ -35,5 +40,9 @@ export const lightTheme = {
     primary: "#494C6B",
     secondary: "#9495A5",
     grayed: "#D1D2DA",
+  },
+  listItem: {
+    background: "#FFFFFF",
+    border: "#E3E4F1",
   },
 };
