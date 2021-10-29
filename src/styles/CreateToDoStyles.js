@@ -1,4 +1,9 @@
 import styled from "styled-components";
+import { ListItemStyle } from "./ListItemStyles";
+
+export const Wrapper = styled(ListItemStyle)`
+  margin-top: 40px;
+`;
 
 export const StyledInput = styled.input.attrs((props) => ({
   type: "text",
@@ -10,7 +15,6 @@ export const StyledInput = styled.input.attrs((props) => ({
   line-height: 1;
   background: transparent;
   caret-color: ${(props) => props.theme.colors.selectedText};
-  margin-left: 1.2rem;
 
   &::placeholder {
     color: ${(props) => props.theme.fontColors.secondary};

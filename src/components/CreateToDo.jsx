@@ -1,10 +1,7 @@
 import React from "react";
 
-import { StyledInput } from "../styles/CreateToDoStyles";
-import {
-  ListItemStyle as Wrapper,
-  CheckButton,
-} from "../styles/ListItemStyles";
+import { StyledInput, Wrapper } from "../styles/CreateToDoStyles";
+import { CheckButton } from "../styles/ListItemStyles";
 
 const CreateToDo = () => {
   return (
