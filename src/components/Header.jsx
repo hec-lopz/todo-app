@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Wrapper, Title, SwitchButton } from "./HeaderStyles";
+import { Wrapper, Title, SwitchButton } from "../styles/HeaderStyles";
 
 const Header = ({ darkMode, handleClick }) => {
   return (

@@ -33,11 +33,10 @@ export const GlobalStyle = createGlobalStyle`
     background-repeat: no-repeat;
     background-attachment: fixed;
 
-    ${
-      "" /* transition-property: background-color, background-image, color;
-    transition-duration: 250ms;
-    transition-timing-function: ease-in-out; */
+    @media screen and (min-width: 375px) {
+      background-image: ${(props) => props.theme.background.desktopImage}
     }
+
   }
 
   *, *::before, *::after {
