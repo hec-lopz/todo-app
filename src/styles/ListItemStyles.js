@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export const ListItemStyle = styled.div`
   background-color: ${(props) => props.theme.listItem.background};
-  max-width: ${() => `${(324 / 375) * 100}%`};
   height: 4.8rem;
+  width: 100%;
   margin: 0 auto;
   margin-top: 40px;
   border-radius: 5px;

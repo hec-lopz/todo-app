@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ThemeProvider } from "styled-components";
 
-import { GlobalStyle } from "../styles/GlobalStyle";
+import { GlobalStyle, Wrapper } from "../styles/GlobalStyle";
 import { lightTheme, darkTheme } from "../styles/themes/styleVariables";
 
 import CreateToDo from "./CreateToDo";
@@ -17,13 +17,15 @@ export const App = () => {
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-      <GlobalStyle />
-      <Header darkMode={darkMode} handleClick={handleClick} />
-      <CreateToDo />
-      <ToDoList>
-        <ToDoItem />
-      </ToDoList>
-      <Filter />
+      <Wrapper>
+        <GlobalStyle />
+        <Header darkMode={darkMode} handleClick={handleClick} />
+        <CreateToDo />
+        <ToDoList>
+          <ToDoItem />
+        </ToDoList>
+        <Filter />
+      </Wrapper>
     </ThemeProvider>
   );
 };

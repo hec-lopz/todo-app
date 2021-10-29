@@ -1,4 +1,12 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
+
+export const Wrapper = styled.div`
+  min-width: 30rem;
+  max-width: 54rem;
+  width: ${() => `${(324 / 375) * 100}%`};
+  margin: 0 auto;
+  margin-top: 50px;
+`;
 
 export const GlobalStyle = createGlobalStyle`
   html {

@@ -9,14 +9,12 @@ export const Title = styled.h1`
     height: 100%;
   }
 `;
-export const Wrapper = styled.header`
+export const HeaderWrapper = styled.header`
   display: flex;
   justify-content: space-between;
-  /* background-color: ${(props) => props.theme.colors.white}; */
-  max-width: ${() => `${(324 / 375) * 100}%`};
-  margin: 0 auto;
   margin-top: 50px;
 `;
+
 export const SwitchButton = styled.button`
   background-color: transparent;
   border: none;

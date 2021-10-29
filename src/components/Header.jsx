@@ -1,10 +1,10 @@
 import React from "react";
 
-import { Wrapper, Title, SwitchButton } from "../styles/HeaderStyles";
+import { HeaderWrapper, Title, SwitchButton } from "../styles/HeaderStyles";
 
 const Header = ({ darkMode, handleClick }) => {
   return (
-    <Wrapper>
+    <HeaderWrapper>
       <Title>
         <img src="/images/TODO.svg" alt="To Do app logo" />
       </Title>
@@ -14,7 +14,7 @@ const Header = ({ darkMode, handleClick }) => {
           alt={darkMode ? "Switch dark mode off" : "Switch dark mode on"}
         />
       </SwitchButton>
-    </Wrapper>
+    </HeaderWrapper>
   );
 };
 
