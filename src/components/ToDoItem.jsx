@@ -1,8 +1,11 @@
 import React from "react";
 
-import { ListItemStyle, CheckButton } from "../styles/ListItemStyles";
+import {
+  ListItemStyle,
+  CheckButton,
+  StyledIcon,
+} from "../styles/ListItemStyles";
 
-import { ReactComponent as CrossIcon } from "../assets/icon-cross.svg";
 import { StyledLi, StyledSpan } from "../styles/ToDoListStyles";
 
 // const StyledListItem = styled.li(ListItemStyle);
@@ -13,7 +16,7 @@ const ToDoItem = ({ text, checked }) => {
       <ListItemStyle>
         <CheckButton />
         <StyledSpan checked={checked}>{text}</StyledSpan>
-        <CrossIcon />
+        <StyledIcon />
       </ListItemStyle>
     </StyledLi>
   );

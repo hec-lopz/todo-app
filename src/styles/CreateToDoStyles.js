@@ -4,6 +4,7 @@ import { ListItemStyle } from "./ListItemStyles";
 export const Wrapper = styled(ListItemStyle)`
   margin-top: 40px;
   border-radius: 5px;
+  background-color: ${(props) => props.theme.listItem.background};
 `;
 
 export const StyledInput = styled.input.attrs((props) => ({

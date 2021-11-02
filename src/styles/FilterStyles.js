@@ -17,6 +17,7 @@ export const ClearButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
+  padding: 0.5rem;
 
   @media screen and (min-width: 1200px) {
     &:hover {
@@ -24,7 +25,9 @@ export const ClearButton = styled.button`
     }
   }
 `;
-export const Counter = styled.span``;
+export const Counter = styled.span`
+  pointer-events: none;
+`;
 export const FilterButton = styled.input.attrs({
   type: "radio",
   name: "filter",
@@ -50,7 +53,7 @@ export const FilterContainer = styled.div`
   justify-content: center;
 
   label {
-    padding: 0 0.5rem;
+    padding: 0.5rem 0.5rem;
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;

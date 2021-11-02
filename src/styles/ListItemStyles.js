@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { ReactComponent as CrossIcon } from "../assets/icon-cross.svg";
+
 export const ListItemStyle = styled.div`
   min-height: 4.8rem;
   width: 100%;
@@ -8,6 +10,12 @@ export const ListItemStyle = styled.div`
   gap: 1.2rem;
   align-items: center;
   padding: 1rem 2rem;
+`;
+
+export const StyledIcon = styled(CrossIcon)`
+  cursor: pointer;
+  padding: 0.5rem;
+  box-sizing: content-box;
 `;
 
 export const CheckButton = styled.input.attrs((props) => ({
