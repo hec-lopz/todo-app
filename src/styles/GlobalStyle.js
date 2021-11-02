@@ -18,9 +18,12 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: inherit;
   }
 
-  input, body{
+  input, body, li, ul{
     margin: 0;
     padding: 0;
+  }
+  ul {
+    list-style: none;
   }
 
   input, ul, li{

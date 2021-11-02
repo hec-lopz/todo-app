@@ -1,23 +1,21 @@
 import React from "react";
-import styled from "styled-components";
 
 import { ListItemStyle, CheckButton } from "../styles/ListItemStyles";
 
 import { ReactComponent as CrossIcon } from "../assets/icon-cross.svg";
+import { StyledLi, StyledSpan } from "../styles/ToDoListStyles";
 
-const StyledSpan = styled.span`
-  text-decoration: ${(props) => (props.checked ? "line-through" : "none")};
-  color: ${(props) =>
-    props.checked ? props.theme.fontColors.grayed : "inherit"};
-`;
+// const StyledListItem = styled.li(ListItemStyle);
 
-const ToDoItem = () => {
+const ToDoItem = ({ text, checked }) => {
   return (
-    <ListItemStyle>
-      <CheckButton />
-      <StyledSpan>Complete online JavaScript course</StyledSpan>
-      <CrossIcon />
-    </ListItemStyle>
+    <StyledLi>
+      <ListItemStyle>
+        <CheckButton />
+        <StyledSpan checked={checked}>{text}</StyledSpan>
+        <CrossIcon />
+      </ListItemStyle>
+    </StyledLi>
   );
 };
 

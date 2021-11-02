@@ -10,6 +10,25 @@ import ToDoList from "./ToDoList";
 import ToDoItem from "./ToDoItem";
 import Filter from "./Filter";
 
+const TodoListItems = [
+  {
+    text: "Do something",
+    checked: false,
+  },
+  {
+    text: "Jog around the park 3x",
+    checked: true,
+  },
+  {
+    text: "Jog around the park 3x",
+    checked: true,
+  },
+  {
+    text: "Jog around the park 3x",
+    checked: true,
+  },
+];
+
 export const App = () => {
   const [darkMode, setDarkMode] = useState(false);
 
@@ -22,7 +41,9 @@ export const App = () => {
         <Header darkMode={darkMode} handleClick={handleClick} />
         <CreateToDo />
         <ToDoList>
-          <ToDoItem />
+          {TodoListItems.map((item) => (
+            <ToDoItem text={item.text} key={item.text} checked={item.checked} />
+          ))}
         </ToDoList>
         <Filter />
       </Wrapper>
