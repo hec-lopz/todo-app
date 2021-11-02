@@ -47,6 +47,10 @@ export const GlobalStyle = createGlobalStyle`
     @media screen and (min-width: 375px) {
       background-image: ${(props) => props.theme.background.desktopImage}
     }
+    @media screen and (min-width: 600px) {
+      font-size:1.8rem;
+
+    }
 
   }
 

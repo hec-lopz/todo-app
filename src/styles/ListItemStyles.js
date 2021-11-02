@@ -2,6 +2,16 @@ import styled from "styled-components";
 
 import { ReactComponent as CrossIcon } from "../assets/icon-cross.svg";
 
+export const StyledIcon = styled(CrossIcon)`
+  cursor: pointer;
+  padding: 0.5rem;
+  box-sizing: content-box;
+  transition: opacity 100ms ease-out;
+
+  @media screen and (min-width: 1200px) {
+    opacity: 0;
+  }
+`;
 export const ListItemStyle = styled.div`
   min-height: 4.8rem;
   width: 100%;
@@ -10,12 +20,16 @@ export const ListItemStyle = styled.div`
   gap: 1.2rem;
   align-items: center;
   padding: 1rem 2rem;
-`;
 
-export const StyledIcon = styled(CrossIcon)`
-  cursor: pointer;
-  padding: 0.5rem;
-  box-sizing: content-box;
+  @media screen and (min-width: 600px) {
+    min-height: 6.4rem;
+  }
+
+  @media screen and (min-width: 1200px) {
+    &:hover ${StyledIcon} {
+      opacity: 1;
+    }
+  }
 `;
 
 export const CheckButton = styled.input.attrs((props) => ({

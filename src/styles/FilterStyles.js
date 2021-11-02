@@ -8,7 +8,7 @@ export const Wrapper = styled(ListItemStyle)`
   position: relative;
   color: ${(props) => props.theme.fontColors.secondary};
 
-  @media screen and (min-width: 1200px) {
+  @media screen and (min-width: 600px) {
     font-size: 1.4rem;
   }
 `;
@@ -27,6 +27,7 @@ export const ClearButton = styled.button`
 `;
 export const Counter = styled.span`
   pointer-events: none;
+  font-size: inherit;
 `;
 export const FilterButton = styled.input.attrs({
   type: "radio",
@@ -35,6 +36,7 @@ export const FilterButton = styled.input.attrs({
   border: none;
   background-color: transparent;
   appearance: none;
+  font-size: inherit;
   &:checked + label {
     color: ${(props) => props.theme.colors.selectedText};
     pointer-events: none;
