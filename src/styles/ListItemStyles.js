@@ -1,10 +1,8 @@
 import styled from "styled-components";
 
 export const ListItemStyle = styled.div`
-  background-color: ${(props) => props.theme.listItem.background};
   min-height: 4.8rem;
   width: 100%;
-  /* border-radius: 5px; */
   display: grid;
   grid-template-columns: 2rem 1fr 2rem;
   gap: 1.2rem;

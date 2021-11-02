@@ -6,7 +6,9 @@ export const StyledSpan = styled.span`
     props.checked ? props.theme.fontColors.grayed : "inherit"};
 `;
 export const StyledLi = styled.li`
-  & + & {
-    border-top: 1px solid ${(props) => props.theme.listItem.border};
-  }
+  border-bottom: 1px solid
+    ${(props) =>
+      props.darkMode
+        ? props.theme.listItem.border
+        : props.theme.listItem.border};
 `;

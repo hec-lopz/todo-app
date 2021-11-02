@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { ListItemStyle } from "./ListItemStyles";
 
 export const Wrapper = styled(ListItemStyle)`
-  border-top: 1px solid ${(props) => props.theme.listItem.border};
   display: flex;
   align-items: center;
   justify-content: space-between;

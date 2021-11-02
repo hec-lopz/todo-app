@@ -4,7 +4,7 @@ import styled from "styled-components";
 const StyledList = styled.ul`
   margin-top: 2.4rem;
   border-radius: 5px;
-  overflow: auto;
+  background-color: ${(props) => props.theme.listItem.background};
 `;
 
 const ToDoList = ({ children }) => {
