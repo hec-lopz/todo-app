@@ -44,6 +44,10 @@ export const CheckButton = styled.input.attrs((props) => ({
   place-items: center;
   position: relative;
   cursor: pointer;
+  &:disabled {
+    pointer-events: none;
+    cursor: none;
+  }
 
   &::before {
     content: "";
