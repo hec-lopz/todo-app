@@ -44,8 +44,8 @@ export const App = () => {
           {TodoListItems.map((item) => (
             <ToDoItem text={item.text} key={item.text} checked={item.checked} />
           ))}
+          <Filter />
         </ToDoList>
-        <Filter />
       </Wrapper>
     </ThemeProvider>
   );
