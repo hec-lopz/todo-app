@@ -51,6 +51,8 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   *, *::before, *::after {
-    transition: all 250ms ease;
+    transition-property: color, background, background-image;
+    transition-duration: 150ms;
+    transition-timing-function: ease-out;
   }
 `;
