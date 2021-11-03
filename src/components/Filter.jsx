@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import {
   Wrapper,
   Counter,
@@ -6,39 +6,40 @@ import {
   FilterButton,
   ClearButton,
 } from "../styles/FilterStyles";
+import { ToDoContext } from "./ToDoContext";
 
 const Filter = () => {
-  const [option, setOption] = useState("");
+  const { length, setFilterOption, filterOption, clearList } =
+    useContext(ToDoContext);
 
   const handleOptionSelection = (e) => {
-    setOption(e.target.id);
-    console.log("newvalue:", e.target.id, "current value: ", option);
+    setFilterOption(e.target.id);
   };
 
   return (
     <Wrapper>
-      <Counter>5 items left</Counter>
+      <Counter>{length} items left</Counter>
       <FilterContainer>
         <FilterButton
           id="all"
-          checked={option === "" || option === "all" ? true : false}
+          checked={filterOption === "all" ? true : false}
           onChange={(e) => handleOptionSelection(e)}
         />
         <label htmlFor="all">All</label>
         <FilterButton
           id="active"
           onChange={(e) => handleOptionSelection(e)}
-          checked={option === "active" ? true : false}
+          checked={filterOption === "active" ? true : false}
         />
         <label htmlFor="active">Active</label>
         <FilterButton
           onChange={(e) => handleOptionSelection(e)}
           id="completed"
-          checked={option === "completed" ? true : false}
+          checked={filterOption === "completed" ? true : false}
         />
         <label htmlFor="completed">Completed</label>
       </FilterContainer>
-      <ClearButton>Clear all</ClearButton>
+      <ClearButton onClick={clearList}>Clear all</ClearButton>
     </Wrapper>
   );
 };
