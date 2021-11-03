@@ -8,7 +8,7 @@ const CreateToDo = () => {
   const { createNewItem } = useContext(ToDoContext);
 
   const handleKeyPress = (e) => {
-    if (e.code !== "Enter") {
+    if (e.key !== "Enter") {
       return;
     }
     const input = e.target;

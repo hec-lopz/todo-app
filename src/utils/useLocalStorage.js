@@ -13,7 +13,8 @@ export const useLocalStorage = (storageName, initialState) => {
       const parsedData = JSON.parse(storageData);
       setItems(parsedData);
     }
-  }, [storageName, initialState]);
+    // eslint-disable-next-line
+  }, []);
 
   const saveData = (newItems) => {
     const stringifiedItem = JSON.stringify(newItems);
