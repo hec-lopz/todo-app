@@ -22,6 +22,7 @@ export const SwitchButton = styled.button`
   width: 20px;
   margin: 0;
   padding: 0;
+  cursor: pointer;
 
   & img {
     /* width: 20px; */

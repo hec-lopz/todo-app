@@ -13,6 +13,7 @@ export const StyledInput = styled.input.attrs((props) => ({
 }))`
   border: none;
   width: 85%;
+  height: 80%;
   font-size: 1em;
   line-height: 1;
   background: transparent;
