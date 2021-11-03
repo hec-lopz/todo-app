@@ -13,7 +13,7 @@ export const useLocalStorage = (storageName, initialState) => {
       const parsedData = JSON.parse(storageData);
       setItems(parsedData);
     }
-  }, []);
+  }, [storageName, initialState]);
 
   const saveData = (newItems) => {
     const stringifiedItem = JSON.stringify(newItems);
