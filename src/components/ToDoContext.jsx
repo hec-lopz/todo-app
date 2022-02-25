@@ -1,9 +1,9 @@
-import React, { createContext, useState } from "react";
+import { useState } from "react";
 import { useLocalStorage } from "../utils/useLocalStorage";
 
-export const ToDoContext = createContext();
+// export const ToDoContext = createContext();
 
-const ToDoProvider = ({ children }) => {
+const useToDoProvider = () => {
   const [items, saveData] = useLocalStorage("TODOS", []);
   const [filterOption, setFilterOption] = useState("all");
 
@@ -46,23 +46,34 @@ const ToDoProvider = ({ children }) => {
 
   const length = items.filter((item) => !item.checked).length;
 
-  return (
-    <ToDoContext.Provider
-      value={{
-        items,
-        createNewItem,
-        deleteItem,
-        completeItem,
-        length,
-        filteredItems,
-        setFilterOption,
-        filterOption,
-        clearList,
-      }}
-    >
-      {children}
-    </ToDoContext.Provider>
-  );
+  return [
+    items,
+    createNewItem,
+    deleteItem,
+    completeItem,
+    length,
+    filteredItems,
+    setFilterOption,
+    filterOption,
+    clearList,
+  ];
+  // return (
+  //   <ToDoContext.Provider
+  //     value={{
+  //       items,
+  //       createNewItem,
+  //       deleteItem,
+  //       completeItem,
+  //       length,
+  //       filteredItems,
+  //       setFilterOption,
+  //       filterOption,
+  //       clearList,
+  //     }}
+  //   >
+  //     {children}
+  //   </ToDoContext.Provider>
+  // );
 };
 
-export default ToDoProvider;
+export default useToDoProvider;

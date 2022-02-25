@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import {
   ListItemStyle,
@@ -7,12 +7,11 @@ import {
 } from "../styles/ListItemStyles";
 
 import { StyledLi, StyledSpan } from "../styles/ToDoListStyles";
-import { ToDoContext } from "./ToDoContext";
 
 // const StyledListItem = styled.li(ListItemStyle);
 
-const ToDoItem = ({ text, checked }) => {
-  const { deleteItem, completeItem } = useContext(ToDoContext);
+const ToDoItem = ({ text, checked, state }) => {
+  const { deleteItem, completeItem } = state;
 
   const handleComplete = (e) => completeItem(text);
   const handleDelete = (e) => deleteItem(text);

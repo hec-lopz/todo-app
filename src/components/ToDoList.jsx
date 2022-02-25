@@ -1,7 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
-import { ToDoContext } from "./ToDoContext";
-import ToDoItem from "./ToDoItem";
 
 const StyledList = styled.ul`
   margin-top: 2.4rem;
@@ -11,16 +9,7 @@ const StyledList = styled.ul`
 `;
 
 const ToDoList = ({ children }) => {
-  const { filteredItems } = useContext(ToDoContext);
-
-  return (
-    <StyledList>
-      {filteredItems.map((item) => (
-        <ToDoItem text={item.text} key={item.text} checked={item.checked} />
-      ))}
-      {children}
-    </StyledList>
-  );
+  return <StyledList>{children}</StyledList>;
 };
 
 export default ToDoList;

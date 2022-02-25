@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   Wrapper,
   Counter,
@@ -6,11 +6,9 @@ import {
   FilterButton,
   ClearButton,
 } from "../styles/FilterStyles";
-import { ToDoContext } from "./ToDoContext";
 
-const Filter = () => {
-  const { length, setFilterOption, filterOption, clearList } =
-    useContext(ToDoContext);
+const Filter = ({ state }) => {
+  const { length, setFilterOption, filterOption, clearList } = state;
 
   const handleOptionSelection = (e) => {
     setFilterOption(e.target.id);

@@ -2,7 +2,7 @@ import React from "react";
 
 import { HeaderWrapper, Title, SwitchButton } from "../styles/HeaderStyles";
 
-const Header = ({ darkMode, handleClick }) => {
+const Header = ({ darkMode, handleClick, children }) => {
   return (
     <HeaderWrapper>
       <Title>
@@ -14,6 +14,7 @@ const Header = ({ darkMode, handleClick }) => {
           alt={darkMode ? "Switch dark mode off" : "Switch dark mode on"}
         />
       </SwitchButton>
+      {children}
     </HeaderWrapper>
   );
 };

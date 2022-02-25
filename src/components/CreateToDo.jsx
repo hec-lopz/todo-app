@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import { StyledInput, Wrapper } from "../styles/CreateToDoStyles";
 import { CheckButton } from "../styles/ListItemStyles";
-import { ToDoContext } from "./ToDoContext";
 
-const CreateToDo = () => {
-  const { createNewItem } = useContext(ToDoContext);
+const CreateToDo = ({ state }) => {
+  const { createNewItem } = state;
+  console.log(state);
 
   const handleKeyPress = (e) => {
     if (e.key !== "Enter") {
