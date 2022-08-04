@@ -2,7 +2,7 @@ import React from "react";
 
 import { HeaderWrapper, Title, SwitchButton } from "../styles/HeaderStyles";
 
-const Header = ({ darkMode, handleClick, children }) => {
+export const Header = ({ darkMode, handleClick, children }) => {
   return (
     <HeaderWrapper>
       <Title>

@@ -1,20 +1,26 @@
 import { useState } from "react";
-import { useLocalStorage } from "../utils/useLocalStorage";
+import { useLocalStorage } from "../hooks/useLocalStorage";
+
+const FILTERS = {
+  ALL: "all",
+  ACTIVE: "active",
+  COMPLETED: "completed",
+};
 
 // export const ToDoContext = createContext();
 
-const useToDoProvider = () => {
+export const useToDoProvider = () => {
   const [items, saveData] = useLocalStorage("TODOS", []);
-  const [filterOption, setFilterOption] = useState("all");
+  const [filterOption, setFilterOption] = useState(FILTERS.ALL);
 
   let filteredItems = [];
   // const filterItems = () => {}
 
-  if (filterOption === "all") {
+  if (filterOption === FILTERS.ALL) {
     filteredItems = [...items];
-  } else if (filterOption === "active") {
+  } else if (filterOption === FILTERS.ACTIVE) {
     filteredItems = items.filter((item) => !item.checked);
-  } else if (filterOption === "completed") {
+  } else if (filterOption === FILTERS.COMPLETED) {
     filteredItems = items.filter((item) => item.checked);
   }
 

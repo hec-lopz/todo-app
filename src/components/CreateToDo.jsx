@@ -3,7 +3,7 @@ import React from "react";
 import { StyledInput, Wrapper } from "../styles/CreateToDoStyles";
 import { CheckButton } from "../styles/ListItemStyles";
 
-const CreateToDo = ({ state }) => {
+export const CreateToDo = ({ state }) => {
   const { createNewItem } = state;
   console.log(state);
 

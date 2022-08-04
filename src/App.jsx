@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import { ThemeProvider } from "styled-components";
 
-import { GlobalStyle, Wrapper } from "../styles/GlobalStyle";
-import { lightTheme, darkTheme } from "../styles/themes/styleVariables";
+import { GlobalStyle, Wrapper, lightTheme, darkTheme } from "./styles";
 
-import CreateToDo from "./CreateToDo";
-import Header from "./Header";
-import ToDoList from "./ToDoList";
-import Filter from "./Filter";
-import ToDoItem from "./ToDoItem";
-import useToDoProvider from "./ToDoContext";
+import { CreateToDo, Header, ToDoList, Filter, ToDoItem } from "./components";
+
+import { useToDoProvider } from "./hooks";
 
 export const App = () => {
   const [darkMode, setDarkMode] = useState(false);

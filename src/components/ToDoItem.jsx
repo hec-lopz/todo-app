@@ -10,7 +10,7 @@ import { StyledLi, StyledSpan } from "../styles/ToDoListStyles";
 
 // const StyledListItem = styled.li(ListItemStyle);
 
-const ToDoItem = ({ text, checked, state }) => {
+export const ToDoItem = ({ text, checked, state }) => {
   const { deleteItem, completeItem } = state;
 
   const handleComplete = (e) => completeItem(text);

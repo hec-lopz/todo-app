@@ -7,7 +7,7 @@ import {
   ClearButton,
 } from "../styles/FilterStyles";
 
-const Filter = ({ state }) => {
+export const Filter = ({ state }) => {
   const { length, setFilterOption, filterOption, clearList } = state;
 
   const handleOptionSelection = (e) => {

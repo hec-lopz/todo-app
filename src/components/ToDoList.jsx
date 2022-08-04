@@ -8,7 +8,7 @@ const StyledList = styled.ul`
   box-shadow: 0px 35px 50px -15px rgba(194, 195, 214, 0.5);
 `;
 
-const ToDoList = ({ children }) => {
+export const ToDoList = ({ children }) => {
   return <StyledList>{children}</StyledList>;
 };
 
