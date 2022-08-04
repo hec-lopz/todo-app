@@ -34,8 +34,9 @@ export const App = () => {
           {filteredItems.map((item) => (
             <ToDoItem
               text={item.text}
-              key={item.text}
-              checked={item.checked}
+              id={item._id}
+              key={item._id}
+              checked={item.done}
               state={{ deleteItem, completeItem }}
             />
           ))}

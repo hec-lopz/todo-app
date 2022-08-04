@@ -7,6 +7,8 @@ const FILTERS = {
   COMPLETED: "completed",
 };
 
+const API = process.env.REACT_APP_API_URL;
+
 // export const ToDoContext = createContext();
 
 export const useToDoProvider = () => {
@@ -24,30 +26,51 @@ export const useToDoProvider = () => {
     filteredItems = items.filter((item) => item.checked);
   }
 
+  const updateData = () => {
+    fetch(`${API}/tasks`)
+      .then((res) => res.json())
+      .then((data) => {
+        saveData(data);
+      });
+  };
   const createNewItem = (text) => {
-    const newItem = {
-      text: text,
-      checked: false,
-    };
-    saveData([...items, newItem]);
+    fetch(`${API}/tasks/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        saveData([...items, json.data]);
+      });
   };
 
-  const completeItem = (text) => {
-    const index = items.findIndex((item) => item.text === text);
-    const newData = [...items];
-    newData[index].checked = !newData[index].checked;
-    saveData(newData);
+  const completeItem = (id, checked) => {
+    fetch(`${API}/tasks/${id}/edit`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ done: !checked }),
+    }).then(() => updateData());
   };
 
-  const deleteItem = (text) => {
-    const itemIndex = items.findIndex((item) => item.text === text);
-    const newData = [...items];
-    newData.splice(itemIndex, 1);
-    saveData(newData);
+  const deleteItem = (id) => {
+    fetch(`${API}/tasks/${id}/delete`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id }),
+    }).then(() => updateData());
   };
 
   const clearList = () => {
-    saveData([]);
+    fetch(`${API}/tasks/delete`, {
+      method: "DELETE",
+    }).then(() => updateData());
   };
 
   const length = items.filter((item) => !item.checked).length;
