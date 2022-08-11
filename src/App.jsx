@@ -11,7 +11,6 @@ export const App = () => {
   const [darkMode, setDarkMode] = useState(false);
 
   const [
-    items,
     createNewItem,
     deleteItem,
     completeItem,
