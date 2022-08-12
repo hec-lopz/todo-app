@@ -5,13 +5,16 @@ import { CheckButton } from "../styles/ListItemStyles";
 
 export const CreateToDo = ({ state }) => {
   const { createNewItem } = state;
-  console.log(state);
 
   const handleKeyPress = (e) => {
     if (e.key !== "Enter") {
       return;
     }
     const input = e.target;
+    if (!input.value) {
+      window.alert("Por favor introduce un valor");
+      return;
+    }
     createNewItem(input.value);
     input.value = "";
   };

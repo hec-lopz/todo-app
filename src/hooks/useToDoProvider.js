@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import { useEffect, useState } from "react";
+// import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const FILTERS = {
   ALL: "all",
@@ -10,29 +10,56 @@ const FILTERS = {
 const API = process.env.REACT_APP_API_URL;
 
 // export const ToDoContext = createContext();
-
 export const useToDoProvider = () => {
-  const [items, saveData] = useLocalStorage("TODOS", []);
+  // const [items, setItems] = useLocalStorage("TODOS", []);
+  const [items, setItems] = useState([]);
   const [filterOption, setFilterOption] = useState(FILTERS.ALL);
+  const [filteredItems, setFilteredItems] = useState([]);
 
-  let filteredItems = [];
-  // const filterItems = () => {}
-
-  if (filterOption === FILTERS.ALL) {
-    filteredItems = [...items];
-  } else if (filterOption === FILTERS.ACTIVE) {
-    filteredItems = items.filter((item) => !item.checked);
-  } else if (filterOption === FILTERS.COMPLETED) {
-    filteredItems = items.filter((item) => item.checked);
-  }
+  /* let filteredItems = [];
+  switch (true) {
+    case filterOption === FILTERS.ALL:
+      filteredItems = [...items];
+      break;
+    case filterOption === FILTERS.ACTIVE:
+      filteredItems = items.filter((item) => !item.checked);
+      break;
+    case filterOption === FILTERS.COMPLETED:
+      filteredItems = items.filter((item) => item.checked);
+      break;
+    default:
+      break;
+  } */
 
   const updateData = () => {
     fetch(`${API}/tasks`)
       .then((res) => res.json())
       .then((data) => {
-        saveData(data);
+        setItems(data);
       });
   };
+  useEffect(() => {
+    updateData();
+  }, []);
+  useEffect(() => {
+    switch (true) {
+      case filterOption === FILTERS.ALL:
+        setFilteredItems([...items]);
+        // filteredItems = [...items];
+        break;
+      case filterOption === FILTERS.ACTIVE:
+        setFilteredItems(items.filter((item) => !item.done));
+        // filteredItems = items.filter((item) => !item.checked);
+        break;
+      case filterOption === FILTERS.COMPLETED:
+        setFilteredItems(items.filter((item) => item.done));
+        // filteredItems = items.filter((item) => item.checked);
+        break;
+      default:
+        break;
+    }
+  }, [filterOption, items]);
+
   const createNewItem = (text) => {
     fetch(`${API}/tasks/add`, {
       method: "POST",
@@ -43,7 +70,7 @@ export const useToDoProvider = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        saveData([...items, json.data]);
+        setItems([...items, json.data]);
       });
   };
 
@@ -73,10 +100,9 @@ export const useToDoProvider = () => {
     }).then(() => updateData());
   };
 
-  const length = items.filter((item) => !item.checked).length;
+  const length = items.filter((item) => !item.done).length;
 
   return [
-    items,
     createNewItem,
     deleteItem,
     completeItem,
