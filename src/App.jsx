@@ -3,7 +3,16 @@ import { ThemeProvider } from "styled-components";
 
 import { GlobalStyle, Wrapper, lightTheme, darkTheme } from "./styles";
 
-import { CreateToDo, Header, ToDoList, Filter, ToDoItem } from "./components";
+import {
+  CreateToDo,
+  Header,
+  ToDoList,
+  Filter,
+  ToDoItem,
+  Modal,
+  SignInForm,
+  SignUpForm,
+} from "./components";
 
 import { useToDoProvider } from "./hooks";
 
@@ -27,6 +36,10 @@ export const App = () => {
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <Wrapper>
         <GlobalStyle />
+        <Modal>
+          <SignInForm />
+          <SignUpForm />
+        </Modal>
         <Header darkMode={darkMode} handleClick={handleClick} />
         <CreateToDo state={{ createNewItem }} />
         <ToDoList>
