@@ -36,6 +36,10 @@ export const useToDoProvider = () => {
       .then((res) => res.json())
       .then((data) => {
         setItems(data);
+      })
+      .catch((err) => {
+        setItems([]);
+        console.error(err.message);
       });
   };
   useEffect(() => {
@@ -71,6 +75,10 @@ export const useToDoProvider = () => {
       .then((res) => res.json())
       .then((json) => {
         setItems([...items, json.data]);
+      })
+      .catch((err) => {
+        setItems([]);
+        console.error(err.message);
       });
   };
 
@@ -81,7 +89,12 @@ export const useToDoProvider = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ done: !checked }),
-    }).then(() => updateData());
+    })
+      .then(() => updateData())
+      .catch((err) => {
+        setItems([]);
+        console.error(err.message);
+      });
   };
 
   const deleteItem = (id) => {
@@ -91,13 +104,23 @@ export const useToDoProvider = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ id }),
-    }).then(() => updateData());
+    })
+      .then(() => updateData())
+      .catch((err) => {
+        updateData();
+        console.error(err.message);
+      });
   };
 
   const clearList = () => {
     fetch(`${API}/tasks/delete`, {
       method: "DELETE",
-    }).then(() => updateData());
+    })
+      .then(() => updateData())
+      .catch((err) => {
+        updateData();
+        console.error(err.message);
+      });
   };
 
   const length = items.filter((item) => !item.done).length;
