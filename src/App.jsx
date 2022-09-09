@@ -9,9 +9,7 @@ import {
   ToDoList,
   Filter,
   ToDoItem,
-  Modal,
-  SignInForm,
-  SignUpForm,
+  Authentication,
 } from "./components";
 
 import { useToDoProvider } from "./hooks";
@@ -36,10 +34,7 @@ export const App = () => {
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <Wrapper>
         <GlobalStyle />
-        <Modal>
-          <SignInForm />
-          <SignUpForm />
-        </Modal>
+        <Authentication />
         <Header darkMode={darkMode} handleClick={handleClick} />
         <CreateToDo state={{ createNewItem }} />
         <ToDoList>
