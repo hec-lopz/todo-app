@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { completeTodo, createTodo } from "../features/todos/todosService";
 // import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const FILTERS = {
@@ -64,37 +65,23 @@ export const useToDoProvider = () => {
     }
   }, [filterOption, items]);
 
-  const createNewItem = (text) => {
-    fetch(`${API}/tasks/add`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text }),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        setItems([...items, json.data]);
-      })
-      .catch((err) => {
-        setItems([]);
-        console.error(err.message);
-      });
+  const createNewItem = async (text) => {
+    try {
+      const { data: res } = await createTodo(text);
+
+      // setItems((prev) => [...prev, res.data]);
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
-  const completeItem = (id, checked) => {
-    fetch(`${API}/tasks/${id}/edit`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ done: !checked }),
-    })
-      .then(() => updateData())
-      .catch((err) => {
-        setItems([]);
-        console.error(err.message);
-      });
+  const completeItem = async (id, checked) => {
+    try {
+      await completeTodo(id, !checked);
+    } catch (error) {
+      console.error(err.message);
+      setItems([]);
+    }
   };
 
   const deleteItem = (id) => {
