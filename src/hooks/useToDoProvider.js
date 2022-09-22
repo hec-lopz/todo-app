@@ -35,7 +35,12 @@ export const useToDoProvider = () => {
     fetch(`${API}/tasks`)
       .then((res) => res.json())
       .then((data) => {
+        if (/^4/.test(data.statusCode)) throw new Error(data.message);
         setItems(data);
+      })
+      .catch((err) => {
+        console.error(err);
+        setItems([]);
       });
   };
   useEffect(() => {
@@ -70,7 +75,13 @@ export const useToDoProvider = () => {
     })
       .then((res) => res.json())
       .then((json) => {
+        debugger;
+        if (/^4/.test(json.statusCode)) throw new Error(json.message);
         setItems([...items, json.data]);
+      })
+      .catch((err) => {
+        console.error(err);
+        setItems([]);
       });
   };
 
@@ -100,7 +111,7 @@ export const useToDoProvider = () => {
     }).then(() => updateData());
   };
 
-  const length = items.filter((item) => !item.done).length;
+  const length = items || items.filter((item) => !item.done).length;
 
   return [
     createNewItem,
