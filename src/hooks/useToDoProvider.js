@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { completeTodo, createTodo } from "../features/todos/todosService";
 // import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const FILTERS = {
@@ -39,8 +40,8 @@ export const useToDoProvider = () => {
         setItems(data);
       })
       .catch((err) => {
-        console.error(err);
         setItems([]);
+        console.error(err.message);
       });
   };
   useEffect(() => {
@@ -65,34 +66,23 @@ export const useToDoProvider = () => {
     }
   }, [filterOption, items]);
 
-  const createNewItem = (text) => {
-    fetch(`${API}/tasks/add`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text }),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        debugger;
-        if (/^4/.test(json.statusCode)) throw new Error(json.message);
-        setItems([...items, json.data]);
-      })
-      .catch((err) => {
-        console.error(err);
-        setItems([]);
-      });
+  const createNewItem = async (text) => {
+    try {
+      const { data: res } = await createTodo(text);
+
+      setItems((prev) => [...prev, res.data]);
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
-  const completeItem = (id, checked) => {
-    fetch(`${API}/tasks/${id}/edit`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ done: !checked }),
-    }).then(() => updateData());
+  const completeItem = async (id, checked) => {
+    try {
+      await completeTodo(id, !checked);
+    } catch (error) {
+      console.error(error.message);
+      setItems([]);
+    }
   };
 
   const deleteItem = (id) => {
@@ -102,13 +92,23 @@ export const useToDoProvider = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ id }),
-    }).then(() => updateData());
+    })
+      .then(() => updateData())
+      .catch((err) => {
+        updateData();
+        console.error(err.message);
+      });
   };
 
   const clearList = () => {
     fetch(`${API}/tasks/delete`, {
       method: "DELETE",
-    }).then(() => updateData());
+    })
+      .then(() => updateData())
+      .catch((err) => {
+        updateData();
+        console.error(err.message);
+      });
   };
 
   const length = items || items.filter((item) => !item.done).length;
