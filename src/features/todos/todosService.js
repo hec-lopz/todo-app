@@ -6,6 +6,14 @@ const instance = axios.create({
   baseURL: API,
 });
 
+export const getTodos = async () => {
+  try {
+    const res = await instance.get("/tasks");
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
 /** Create ToDo
  * @description create a new todo
  * @param {string} text
@@ -16,9 +24,10 @@ export const createTodo = async (text) => {
       text,
     });
 
+    debugger;
     return res;
   } catch (error) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -31,10 +40,29 @@ export const completeTodo = async (id, checked) => {
   return res;
 };
 
-export const deleteTodo = async () => {
-  throw new Error("Not implemented");
+/** Delete ToDo
+ * @param {string} id
+ *
+ *
+ *
+ * */
+export const deleteTodo = async (id) => {
+  try {
+    await instance.delete(`/tasks/${id}/delete`);
+  } catch (error) {
+    throw error;
+  }
 };
 
+/** Clear ToDos
+ *
+ *
+ *
+ * */
 export const clearTodos = async () => {
-  throw new Error("Not implemented");
+  try {
+    await instance.delete(`/tasks/delete`);
+  } catch (error) {
+    throw error;
+  }
 };
