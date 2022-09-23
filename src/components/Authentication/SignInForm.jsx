@@ -1,12 +1,8 @@
 import { Form, FormGroup, Input, Button, SignUpLink } from "../../styles/Form";
-import { useState } from "react";
+import { useForm } from "../../hooks";
 
 export const SignInForm = ({ switchForm }) => {
-  const [data, setData] = useState({ email: "", password: "" });
-  const handleChange = (e) => {
-    const { value, name } = e.target;
-    setData((prevState) => ({ ...prevState, [name]: value }));
-  };
+  const { data, handleChange } = useForm({ email: "", password: "" });
 
   const handleSubmit = (e) => {
     e.preventDefault();
