@@ -12,7 +12,7 @@ import {
   Authentication,
 } from "./components";
 
-import { useToDoProvider } from "./hooks";
+import { useToDoProvider, useModal } from "./hooks";
 
 export const App = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -28,14 +28,15 @@ export const App = () => {
     clearList,
   } = useToDoProvider();
 
-  const handleClick = () => setDarkMode(!darkMode);
+  const { onOpen, ...state } = useModal();
 
+  const handleClick = () => setDarkMode(!darkMode);
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <Wrapper>
         <GlobalStyle />
-        <Authentication />
-        <Header darkMode={darkMode} handleClick={handleClick} />
+        <Authentication {...state} />
+        <Header darkMode={darkMode} handleClick={handleClick} onOpen={onOpen} />
         <CreateToDo state={{ createNewItem }} />
         <ToDoList>
           {filteredTasks.map((item) => (
