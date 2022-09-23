@@ -1,4 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
+import {
+  clearTodos,
+  completeTodo,
+  createTodo,
+  deleteTodo,
+  getTodos,
+} from "../features/todos/todosService";
 // import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const FILTERS = {
@@ -6,135 +13,124 @@ const FILTERS = {
   ACTIVE: "active",
   COMPLETED: "completed",
 };
-
-const API = process.env.REACT_APP_API_URL;
+const ACTIONS = {
+  CREATE: "create",
+  READ: "read",
+  EDIT: "edit",
+  DELETE: "delete",
+  DELETE_ALL: "delete_all",
+};
 
 // export const ToDoContext = createContext();
+const todosReducer = (state, action) => {
+  const { payload } = action;
+  switch (action.type) {
+    case ACTIONS.CREATE:
+      console.log("create");
+      return [...state, action.payload];
+    case ACTIONS.READ:
+      return [...action.payload];
+    case ACTIONS.EDIT:
+      const task = state.find((item) => item._id === payload.id);
+      task.done = !task.done;
+      return [...state];
+    case ACTIONS.DELETE:
+      const tasks = state.filter((item) => item._id !== payload.id);
+      return tasks;
+    case ACTIONS.DELETE_ALL:
+      return [];
+    default:
+      break;
+  }
+};
 export const useToDoProvider = () => {
   // const [items, setItems] = useLocalStorage("TODOS", []);
-  const [items, setItems] = useState([]);
+  const [tasks, dispatch] = useReducer(todosReducer, []);
   const [filterOption, setFilterOption] = useState(FILTERS.ALL);
-  const [filteredItems, setFilteredItems] = useState([]);
 
-  /* let filteredItems = [];
-  switch (true) {
-    case filterOption === FILTERS.ALL:
-      filteredItems = [...items];
+  useEffect(() => {
+    getTodos()
+      .then((data) => dispatch({ type: ACTIONS.READ, payload: data }))
+      .catch((err) => {
+        console.error(err);
+        dispatch({ type: ACTIONS.READ, payload: [] });
+      });
+  }, []);
+
+  let filteredTasks = [];
+  switch (filterOption) {
+    case FILTERS.ALL:
+      filteredTasks = [...tasks];
       break;
-    case filterOption === FILTERS.ACTIVE:
-      filteredItems = items.filter((item) => !item.checked);
+    case FILTERS.ACTIVE:
+      filteredTasks = tasks.filter((item) => !item.done);
       break;
-    case filterOption === FILTERS.COMPLETED:
-      filteredItems = items.filter((item) => item.checked);
+    case FILTERS.COMPLETED:
+      filteredTasks = tasks.filter((item) => item.done);
       break;
     default:
       break;
-  } */
+  }
 
-  const updateData = () => {
-    fetch(`${API}/tasks`)
-      .then((res) => res.json())
-      .then((data) => {
-        setItems(data);
-      })
-      .catch((err) => {
-        setItems([]);
-        console.error(err.message);
-      });
-  };
-  useEffect(() => {
-    updateData();
-  }, []);
-  useEffect(() => {
-    switch (true) {
-      case filterOption === FILTERS.ALL:
-        setFilteredItems([...items]);
-        // filteredItems = [...items];
-        break;
-      case filterOption === FILTERS.ACTIVE:
-        setFilteredItems(items.filter((item) => !item.done));
-        // filteredItems = items.filter((item) => !item.checked);
-        break;
-      case filterOption === FILTERS.COMPLETED:
-        setFilteredItems(items.filter((item) => item.done));
-        // filteredItems = items.filter((item) => item.checked);
-        break;
-      default:
-        break;
+  const createNewItem = async (text) => {
+    try {
+      const { data: res } = await createTodo(text);
+
+      dispatch({ type: ACTIONS.CREATE, payload: res.data });
+    } catch (error) {
+      console.log(error);
+      if (error.response.status === 401) {
+        let id = tasks.length !== 0 ? tasks.at(-1).id + 1 : 1;
+        const task = {
+          _id: id,
+          text: text,
+          done: false,
+        };
+
+        dispatch({ type: ACTIONS.CREATE, payload: task });
+      }
     }
-  }, [filterOption, items]);
-
-  const createNewItem = (text) => {
-    fetch(`${API}/tasks/add`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text }),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        setItems([...items, json.data]);
-      })
-      .catch((err) => {
-        setItems([]);
-        console.error(err.message);
-      });
   };
 
-  const completeItem = (id, checked) => {
-    fetch(`${API}/tasks/${id}/edit`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ done: !checked }),
-    })
-      .then(() => updateData())
-      .catch((err) => {
-        setItems([]);
-        console.error(err.message);
-      });
+  const completeItem = async (id, checked) => {
+    try {
+      dispatch({ type: ACTIONS.EDIT, payload: { id } });
+      await completeTodo(id, !checked);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const deleteItem = (id) => {
-    fetch(`${API}/tasks/${id}/delete`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id }),
-    })
-      .then(() => updateData())
-      .catch((err) => {
-        updateData();
-        console.error(err.message);
-      });
+  const deleteItem = async (id) => {
+    try {
+      dispatch({ type: ACTIONS.DELETE, payload: { id } });
+      await deleteTodo(id);
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
-  const clearList = () => {
-    fetch(`${API}/tasks/delete`, {
-      method: "DELETE",
-    })
-      .then(() => updateData())
-      .catch((err) => {
-        updateData();
-        console.error(err.message);
-      });
+  const clearList = async () => {
+    try {
+      dispatch({ type: ACTIONS.DELETE_ALL });
+      await clearTodos();
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
-  const length = items.filter((item) => !item.done).length;
+  const length = tasks.filter((item) => !item.done).length;
 
-  return [
+  return {
     createNewItem,
     deleteItem,
     completeItem,
     length,
-    filteredItems,
+    filteredTasks,
     setFilterOption,
     filterOption,
     clearList,
-  ];
+  };
   // return (
   //   <ToDoContext.Provider
   //     value={{

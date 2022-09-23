@@ -10,16 +10,16 @@ import { useToDoProvider } from "./hooks";
 export const App = () => {
   const [darkMode, setDarkMode] = useState(false);
 
-  const [
+  const {
     createNewItem,
     deleteItem,
     completeItem,
     length,
-    filteredItems,
+    filteredTasks,
     setFilterOption,
     filterOption,
     clearList,
-  ] = useToDoProvider();
+  } = useToDoProvider();
 
   const handleClick = () => setDarkMode(!darkMode);
 
@@ -30,7 +30,7 @@ export const App = () => {
         <Header darkMode={darkMode} handleClick={handleClick} />
         <CreateToDo state={{ createNewItem }} />
         <ToDoList>
-          {filteredItems.map((item) => (
+          {filteredTasks.map((item) => (
             <ToDoItem
               text={item.text}
               id={item._id}
