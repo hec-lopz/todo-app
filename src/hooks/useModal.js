@@ -4,7 +4,7 @@ export const FORM = {
   SIGN_IN: "signin",
 };
 export const useModal = () => {
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [shownForm, setShownForm] = useState(FORM.SIGN_UP);
 
   const onOpen = (form) => {
