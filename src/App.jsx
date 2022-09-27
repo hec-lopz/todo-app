@@ -1,18 +1,13 @@
 import React, { useState } from "react";
 import { ThemeProvider } from "styled-components";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { GlobalStyle, Wrapper, lightTheme, darkTheme } from "./styles";
 
-import {
-  CreateToDo,
-  Header,
-  ToDoList,
-  Filter,
-  ToDoItem,
-  Authentication,
-} from "./components";
+import { Authentication } from "./components";
 
-import { useToDoProvider, useModal } from "./hooks";
+import { useModal } from "./hooks";
 
 export const App = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -35,6 +30,7 @@ export const App = () => {
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <Wrapper>
         <GlobalStyle />
+        <ToastContainer autoClose={1000} />
         <Authentication {...state} />
         <Header darkMode={darkMode} handleClick={handleClick} onOpen={onOpen} />
         <CreateToDo state={{ createNewItem }} />

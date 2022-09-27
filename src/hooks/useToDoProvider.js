@@ -1,11 +1,8 @@
 import { useEffect, useReducer, useState } from "react";
-import {
-  clearTodos,
-  completeTodo,
-  createTodo,
-  deleteTodo,
-  getTodos,
-} from "../features/todos/todosService";
+import todoService from "../features/todos/todosService";
+import { toast } from "react-toastify";
+
+import { useSelector } from "react-redux";
 // import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const FILTERS = {
@@ -17,6 +14,7 @@ const ACTIONS = {
   CREATE: "create",
   READ: "read",
   EDIT: "edit",
+  COMPLETE: "complete",
   DELETE: "delete",
   DELETE_ALL: "delete_all",
 };
@@ -26,21 +24,21 @@ const todosReducer = (state, action) => {
   const { payload } = action;
   switch (action.type) {
     case ACTIONS.CREATE:
-      console.log("create");
       return [...state, action.payload];
     case ACTIONS.READ:
       return [...action.payload];
-    case ACTIONS.EDIT:
-      const task = state.find((item) => item._id === payload.id);
-      task.done = !task.done;
-      return [...state];
+    case ACTIONS.COMPLETE:
+      const taskIndex = state.findIndex((item) => item._id === payload.id);
+      const newState = [...state];
+      newState[taskIndex].done = !payload.done;
+      return newState;
     case ACTIONS.DELETE:
       const tasks = state.filter((item) => item._id !== payload.id);
       return tasks;
     case ACTIONS.DELETE_ALL:
       return [];
     default:
-      break;
+      throw new Error("Action type not valid");
   }
 };
 export const useToDoProvider = () => {
@@ -48,14 +46,22 @@ export const useToDoProvider = () => {
   const [tasks, dispatch] = useReducer(todosReducer, []);
   const [filterOption, setFilterOption] = useState(FILTERS.ALL);
 
+  const { user } = useSelector((state) => state.auth);
+
   useEffect(() => {
-    getTodos()
+    dispatch({ type: ACTIONS.DELETE_ALL });
+    if (!user) {
+      toast.info("Login to save your list", { autoClose: 2000 });
+      return;
+    }
+    todoService
+      .getTodos(user.token)
       .then((data) => dispatch({ type: ACTIONS.READ, payload: data }))
       .catch((err) => {
         console.error(err);
         dispatch({ type: ACTIONS.READ, payload: [] });
       });
-  }, []);
+  }, [user]);
 
   let filteredTasks = [];
   switch (filterOption) {
@@ -73,50 +79,56 @@ export const useToDoProvider = () => {
   }
 
   const createNewItem = async (text) => {
+    if (!user) {
+      let id = tasks.length !== 0 ? tasks.at(-1)._id + 1 : 1;
+      const task = {
+        _id: id,
+        text: text,
+        done: false,
+      };
+      dispatch({ type: ACTIONS.CREATE, payload: task });
+      return;
+    }
     try {
-      const { data: res } = await createTodo(text);
+      const { data: res } = await todoService.createTodo(text, user.token);
 
       dispatch({ type: ACTIONS.CREATE, payload: res.data });
     } catch (error) {
-      console.log(error);
-      if (error.response.status === 401) {
-        let id = tasks.length !== 0 ? tasks.at(-1).id + 1 : 1;
-        const task = {
-          _id: id,
-          text: text,
-          done: false,
-        };
-
-        dispatch({ type: ACTIONS.CREATE, payload: task });
-      }
+      toast.error(error.response.data.message);
     }
   };
 
   const completeItem = async (id, checked) => {
-    try {
-      dispatch({ type: ACTIONS.EDIT, payload: { id } });
-      await completeTodo(id, !checked);
-    } catch (error) {
-      console.error(error);
+    if (user) {
+      try {
+        await todoService.completeTodo(id, !checked, user.token);
+      } catch (error) {
+        console.error(error);
+      }
     }
+    dispatch({ type: ACTIONS.COMPLETE, payload: { id, done: checked } });
   };
 
   const deleteItem = async (id) => {
-    try {
-      dispatch({ type: ACTIONS.DELETE, payload: { id } });
-      await deleteTodo(id);
-    } catch (error) {
-      console.error(error.message);
+    if (user) {
+      try {
+        await todoService.deleteTodo(id, user.token);
+      } catch (error) {
+        console.error(error.message);
+      }
     }
+    dispatch({ type: ACTIONS.DELETE, payload: { id } });
   };
 
   const clearList = async () => {
-    try {
-      dispatch({ type: ACTIONS.DELETE_ALL });
-      await clearTodos();
-    } catch (error) {
-      console.error(error.message);
+    if (user) {
+      try {
+        await todoService.clearTodos(user.token);
+      } catch (error) {
+        console.error(error.message);
+      }
     }
+    dispatch({ type: ACTIONS.DELETE_ALL });
   };
 
   const length = tasks.filter((item) => !item.done).length;

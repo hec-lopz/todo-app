@@ -6,9 +6,14 @@ const instance = axios.create({
   baseURL: API,
 });
 
-export const getTodos = async () => {
+const getTodos = async (token) => {
   try {
-    const res = await instance.get("/tasks");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await instance.get("/tasks", config);
     return res.data;
   } catch (error) {
     throw error;
@@ -18,13 +23,21 @@ export const getTodos = async () => {
  * @description create a new todo
  * @param {string} text
  */
-export const createTodo = async (text) => {
+const createTodo = async (text, token) => {
   try {
-    const res = await instance.post("/tasks/add", {
-      text,
-    });
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await instance.post(
+      "/tasks/add",
+      {
+        text,
+      },
+      config
+    );
 
-    debugger;
     return res;
   } catch (error) {
     throw error;
@@ -35,8 +48,17 @@ export const createTodo = async (text) => {
  * @param {string} id
  * @param {boolean} checked
  */
-export const completeTodo = async (id, checked) => {
-  const res = await instance.put(`/tasks/${id}/edit`, { done: checked });
+const completeTodo = async (id, checked, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const res = await instance.put(
+    `/tasks/${id}/edit`,
+    { done: checked },
+    config
+  );
   return res;
 };
 
@@ -46,9 +68,14 @@ export const completeTodo = async (id, checked) => {
  *
  *
  * */
-export const deleteTodo = async (id) => {
+const deleteTodo = async (id, token) => {
   try {
-    await instance.delete(`/tasks/${id}/delete`);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    await instance.delete(`/tasks/${id}/delete`, config);
   } catch (error) {
     throw error;
   }
@@ -59,10 +86,25 @@ export const deleteTodo = async (id) => {
  *
  *
  * */
-export const clearTodos = async () => {
+const clearTodos = async (token) => {
   try {
-    await instance.delete(`/tasks/delete`);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    await instance.delete(`/tasks/delete`, config);
   } catch (error) {
     throw error;
   }
 };
+
+const todoService = {
+  getTodos,
+  createTodo,
+  completeTodo,
+  deleteTodo,
+  clearTodos,
+};
+
+export default todoService;

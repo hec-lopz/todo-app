@@ -12,8 +12,12 @@ export const Authentication = ({
   if (!showModal) return null;
   return (
     <Modal onClose={onClose}>
-      {shownForm === FORM.SIGN_UP && <SignUpForm switchForm={switchForm} />}
-      {shownForm === FORM.SIGN_IN && <SignInForm switchForm={switchForm} />}
+      {shownForm === FORM.SIGN_UP && (
+        <SignUpForm switchForm={switchForm} closeModal={onClose} />
+      )}
+      {shownForm === FORM.SIGN_IN && (
+        <SignInForm switchForm={switchForm} closeModal={onClose} />
+      )}
     </Modal>
   );
 };
