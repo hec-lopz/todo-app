@@ -1,8 +1,10 @@
 import { useEffect, useReducer, useState } from "react";
+
 import todoService from "../features/todos/todosService";
 import { toast } from "react-toastify";
 
 import { useSelector } from "react-redux";
+
 // import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const FILTERS = {
@@ -38,13 +40,16 @@ const todosReducer = (state, action) => {
     case ACTIONS.DELETE_ALL:
       return [];
     default:
+
       throw new Error("Action type not valid");
+
   }
 };
 export const useToDoProvider = () => {
   // const [items, setItems] = useLocalStorage("TODOS", []);
   const [tasks, dispatch] = useReducer(todosReducer, []);
   const [filterOption, setFilterOption] = useState(FILTERS.ALL);
+
 
   const { user } = useSelector((state) => state.auth);
 
@@ -56,12 +61,15 @@ export const useToDoProvider = () => {
     }
     todoService
       .getTodos(user.token)
+
       .then((data) => dispatch({ type: ACTIONS.READ, payload: data }))
       .catch((err) => {
         console.error(err);
         dispatch({ type: ACTIONS.READ, payload: [] });
       });
+
   }, [user]);
+
 
   let filteredTasks = [];
   switch (filterOption) {
@@ -129,6 +137,7 @@ export const useToDoProvider = () => {
       }
     }
     dispatch({ type: ACTIONS.DELETE_ALL });
+
   };
 
   const length = tasks.filter((item) => !item.done).length;

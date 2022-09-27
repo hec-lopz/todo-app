@@ -13,13 +13,16 @@ import { useModal } from "./hooks";
 export const App = () => {
   const [darkMode, setDarkMode] = useState(false);
 
+
   const { onOpen, ...state } = useModal();
+
 
   const handleClick = () => setDarkMode(!darkMode);
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <Wrapper>
         <GlobalStyle />
+
         <ToastContainer autoClose={1000} />
         <Authentication {...state} />
         <Dashboard
@@ -27,6 +30,7 @@ export const App = () => {
           handleClick={handleClick}
           onOpen={onOpen}
         />
+
       </Wrapper>
     </ThemeProvider>
   );

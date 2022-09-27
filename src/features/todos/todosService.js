@@ -6,6 +6,7 @@ const instance = axios.create({
   baseURL: API,
 });
 
+
 const getTodos = async (token) => {
   try {
     const config = {
@@ -14,6 +15,7 @@ const getTodos = async (token) => {
       },
     };
     const res = await instance.get("/tasks", config);
+
     return res.data;
   } catch (error) {
     throw error;
@@ -23,6 +25,7 @@ const getTodos = async (token) => {
  * @description create a new todo
  * @param {string} text
  */
+
 const createTodo = async (text, token) => {
   try {
     const config = {
@@ -38,6 +41,7 @@ const createTodo = async (text, token) => {
       config
     );
 
+
     return res;
   } catch (error) {
     throw error;
@@ -48,6 +52,7 @@ const createTodo = async (text, token) => {
  * @param {string} id
  * @param {boolean} checked
  */
+
 const completeTodo = async (id, checked, token) => {
   const config = {
     headers: {
@@ -59,6 +64,7 @@ const completeTodo = async (id, checked, token) => {
     { done: checked },
     config
   );
+
   return res;
 };
 
@@ -68,6 +74,7 @@ const completeTodo = async (id, checked, token) => {
  *
  *
  * */
+
 const deleteTodo = async (id, token) => {
   try {
     const config = {
@@ -76,6 +83,7 @@ const deleteTodo = async (id, token) => {
       },
     };
     await instance.delete(`/tasks/${id}/delete`, config);
+
   } catch (error) {
     throw error;
   }
@@ -86,6 +94,7 @@ const deleteTodo = async (id, token) => {
  *
  *
  * */
+
 const clearTodos = async (token) => {
   try {
     const config = {
@@ -94,10 +103,12 @@ const clearTodos = async (token) => {
       },
     };
     await instance.delete(`/tasks/delete`, config);
+
   } catch (error) {
     throw error;
   }
 };
+
 
 const todoService = {
   getTodos,
@@ -108,3 +119,4 @@ const todoService = {
 };
 
 export default todoService;
+
