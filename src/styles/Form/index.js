@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const FormGroup = styled.div`
@@ -30,7 +31,8 @@ export const Button = styled.button`
 export const Form = styled.form`
   margin: 5rem 0;
 `;
-export const SignUpLink = styled.span`
+export const SignUpLink = styled(Link)`
+  text-decoration: none;
   font-weight: bold;
   cursor: default;
   &:hover {

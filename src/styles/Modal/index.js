@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { ReactComponent as CrossIcon } from "../../assets/icon-cross.svg";
+import { Link } from "react-router-dom";
 
 export const Overlay = styled.div`
   position: fixed;

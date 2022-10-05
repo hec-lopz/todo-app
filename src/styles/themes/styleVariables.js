@@ -12,6 +12,7 @@ const globalVariables = {
 
 export const darkTheme = {
   ...globalVariables,
+  theme: "dark",
   background: {
     color: "#171823",
     desktopImage: 'url("/images/bg-desktop-dark.jpg")',
@@ -26,10 +27,14 @@ export const darkTheme = {
     background: "#25273D",
     border: "#393A4B",
   },
+  icons: {
+    themeSwitch: "/images/icon-sun.svg",
+  },
 };
 
 export const lightTheme = {
   ...globalVariables,
+  theme: "light",
   background: {
     color: "#F2F2F2",
     listItem: "FFFFFF",
@@ -44,5 +49,8 @@ export const lightTheme = {
   listItem: {
     background: "#FFFFFF",
     border: "#E3E4F1",
+  },
+  icons: {
+    themeSwitch: "/images/icon-moon.svg",
   },
 };

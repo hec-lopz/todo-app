@@ -1,6 +1,6 @@
 import { CreateToDo, Header, ToDoList, Filter, ToDoItem } from "../components";
 import { useToDoProvider } from "../hooks";
-export const Dashboard = ({ darkMode, handleClick, onOpen }) => {
+export const Dashboard = ({ handleClick }) => {
   const {
     createNewItem,
     deleteItem,
@@ -13,7 +13,7 @@ export const Dashboard = ({ darkMode, handleClick, onOpen }) => {
   } = useToDoProvider();
   return (
     <>
-      <Header darkMode={darkMode} handleClick={handleClick} onOpen={onOpen} />
+      <Header handleClick={handleClick} />
       <CreateToDo state={{ createNewItem }} />
       <ToDoList>
         {filteredTasks.map((item) => (
