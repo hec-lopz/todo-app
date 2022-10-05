@@ -31,8 +31,8 @@ export const Header = ({ darkMode, handleClick, children, onOpen }) => {
           <Button onClick={handleLogout}>Logout</Button>
         ) : (
           <>
-            <Button onClick={() => onOpen(FORM.SIGN_IN)}>Sign in</Button> |
-            <Button onClick={() => onOpen(FORM.SIGN_UP)}>Sign up</Button>
+            <Button onClick={() => onOpen(FORM.SIGN_IN)}>Login</Button> |
+            <Button onClick={() => onOpen(FORM.SIGN_UP)}>Register</Button>
           </>
         )}
         <SwitchButton onClick={handleClick}>
