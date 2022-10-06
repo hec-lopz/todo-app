@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 // import ToDoLogo from "/images/TODO.svg";
 export const Title = styled.h1`
@@ -32,12 +33,13 @@ export const SwitchButton = styled.button`
   }
 `;
 
-export const Button = styled.button`
+export const Button = styled(Link)`
   background-color: transparent;
   color: ${(props) => props.theme.colors.white};
   appearance: none;
   padding: 1rem 0.5rem;
   border: none;
+  text-decoration: none;
   font-size: 1.6rem;
   transform: translateY(0.25rem);
   content: "test";

@@ -5,7 +5,7 @@ import {
   FilterContainer,
   FilterButton,
   ClearButton,
-} from "../styles/FilterStyles";
+} from "../../styles/Todos/FilterStyles";
 
 export const Filter = ({ state }) => {
   const { length, setFilterOption, filterOption, clearList } = state;

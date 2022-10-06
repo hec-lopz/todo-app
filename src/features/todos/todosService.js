@@ -3,9 +3,8 @@ import axios from "axios";
 const API = process.env.REACT_APP_API_URL;
 
 const instance = axios.create({
-  baseURL: API,
+  baseURL: `${API}/tasks`,
 });
-
 
 const getTodos = async (token) => {
   try {
@@ -14,7 +13,7 @@ const getTodos = async (token) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    const res = await instance.get("/tasks", config);
+    const res = await instance.get("/", config);
 
     return res.data;
   } catch (error) {
@@ -34,18 +33,33 @@ const createTodo = async (text, token) => {
       },
     };
     const res = await instance.post(
-      "/tasks/add",
+      "/add",
       {
         text,
       },
       config
     );
 
-
     return res;
   } catch (error) {
     throw error;
   }
+};
+
+/** Edit ToDo
+ * @param {string} id
+ * @param {string} text
+ */
+
+const editTodo = async (id, text, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const res = await instance.put(`/${id}/edit`, { text }, config);
+
+  return res;
 };
 
 /** Complete ToDo
@@ -59,11 +73,7 @@ const completeTodo = async (id, checked, token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const res = await instance.put(
-    `/tasks/${id}/edit`,
-    { done: checked },
-    config
-  );
+  const res = await instance.put(`/${id}/edit`, { done: checked }, config);
 
   return res;
 };
@@ -82,8 +92,7 @@ const deleteTodo = async (id, token) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    await instance.delete(`/tasks/${id}/delete`, config);
-
+    await instance.delete(`/${id}/delete`, config);
   } catch (error) {
     throw error;
   }
@@ -102,16 +111,15 @@ const clearTodos = async (token) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    await instance.delete(`/tasks/delete`, config);
-
+    await instance.delete(`/delete`, config);
   } catch (error) {
     throw error;
   }
 };
 
-
 const todoService = {
   getTodos,
+  editTodo,
   createTodo,
   completeTodo,
   deleteTodo,
@@ -119,4 +127,3 @@ const todoService = {
 };
 
 export default todoService;
-

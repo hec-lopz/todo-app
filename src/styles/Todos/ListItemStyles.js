@@ -1,22 +1,32 @@
 import styled from "styled-components";
 
-import { ReactComponent as CrossIcon } from "../assets/icon-cross.svg";
-
-export const StyledIcon = styled(CrossIcon)`
-  cursor: pointer;
-  padding: 0.5rem;
-  box-sizing: content-box;
+export const Options = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
   transition: opacity 100ms ease-out;
-
+  position: absolute;
+  right: 2rem;
   @media screen and (min-width: 1200px) {
     opacity: 0;
   }
+`;
+export const Icon = styled.span`
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  padding: 0.5rem;
+  box-sizing: content-box;
+  color: ${(props) => props.theme.fontColors.secondary};
 `;
 export const ListItemStyle = styled.div`
   min-height: 4.8rem;
   width: 100%;
   display: grid;
-  grid-template-columns: 2rem 1fr 2rem;
+  grid-template-columns: 2rem 1fr 4rem;
+  position: relative;
+  /* grid-template-columns: 1fr 6fr 1fr; */
   gap: 1.2rem;
   align-items: center;
   padding: 1rem 2rem;
@@ -26,7 +36,7 @@ export const ListItemStyle = styled.div`
   }
 
   @media screen and (min-width: 1200px) {
-    &:hover ${StyledIcon} {
+    &:hover ${Options} {
       opacity: 1;
     }
   }

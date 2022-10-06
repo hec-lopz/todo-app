@@ -1,11 +1,13 @@
-import { Form, FormGroup, Input, Button, SignUpLink } from "../../styles/Form";
-import { useForm } from "../../hooks";
+import { Form, FormGroup, Input, Button, SignUpLink } from "../styles/Form";
+import { useForm } from "../hooks";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { login, reset } from "../../features/auth/authSlice";
+import { login, reset } from "../features/auth/authSlice";
 import { useEffect } from "react";
+import Modal from "../components/Modal";
+import { useNavigate } from "react-router";
 
-export const SignInForm = ({ switchForm, closeModal }) => {
+export const SignInForm = () => {
   const { data: formData, handleChange } = useForm({ email: "", password: "" });
 
   const { email, password } = formData;
@@ -14,16 +16,18 @@ export const SignInForm = ({ switchForm, closeModal }) => {
     (state) => state.auth
   );
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isError) toast.error(message, { autoClose: 1800 });
     if (isSuccess) {
       toast.success(`Welcome ${user.name}`);
-      closeModal();
+      navigate("/");
     }
 
     dispatch(reset());
-  }, [user, isError, isSuccess, dispatch, message, closeModal]);
+  }, [user, isError, isSuccess, dispatch, message, navigate]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -39,8 +43,9 @@ export const SignInForm = ({ switchForm, closeModal }) => {
 
     dispatch(login(userData));
   };
+
   return (
-    <>
+    <Modal>
       <h3>Sign in with email</h3>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
@@ -64,10 +69,9 @@ export const SignInForm = ({ switchForm, closeModal }) => {
         <Button>Sign In</Button>
       </Form>
       <span>
-        Don't have an account?{" "}
-        <SignUpLink onClick={switchForm}>Sign up</SignUpLink>
+        Don't have an account? <SignUpLink to="/register">Sign up</SignUpLink>
       </span>
-    </>
+    </Modal>
   );
 };
 

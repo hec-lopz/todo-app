@@ -24,14 +24,21 @@ const ACTIONS = {
 // export const ToDoContext = createContext();
 const todosReducer = (state, action) => {
   const { payload } = action;
+  let taskIndex;
+  let newState;
   switch (action.type) {
     case ACTIONS.CREATE:
       return [...state, action.payload];
     case ACTIONS.READ:
       return [...action.payload];
+    case ACTIONS.EDIT:
+      taskIndex = state.findIndex((item) => item._id === payload.id);
+      newState = [...state];
+      newState[taskIndex].text = payload.text;
+      return newState;
     case ACTIONS.COMPLETE:
-      const taskIndex = state.findIndex((item) => item._id === payload.id);
-      const newState = [...state];
+      taskIndex = state.findIndex((item) => item._id === payload.id);
+      newState = [...state];
       newState[taskIndex].done = !payload.done;
       return newState;
     case ACTIONS.DELETE:
@@ -40,16 +47,13 @@ const todosReducer = (state, action) => {
     case ACTIONS.DELETE_ALL:
       return [];
     default:
-
       throw new Error("Action type not valid");
-
   }
 };
 export const useToDoProvider = () => {
   // const [items, setItems] = useLocalStorage("TODOS", []);
   const [tasks, dispatch] = useReducer(todosReducer, []);
   const [filterOption, setFilterOption] = useState(FILTERS.ALL);
-
 
   const { user } = useSelector((state) => state.auth);
 
@@ -67,9 +71,7 @@ export const useToDoProvider = () => {
         console.error(err);
         dispatch({ type: ACTIONS.READ, payload: [] });
       });
-
   }, [user]);
-
 
   let filteredTasks = [];
   switch (filterOption) {
@@ -106,15 +108,26 @@ export const useToDoProvider = () => {
     }
   };
 
-  const completeItem = async (id, checked) => {
+  const editItem = async (id, text) => {
     if (user) {
       try {
-        await todoService.completeTodo(id, !checked, user.token);
+        await todoService.editTodo(id, text, user.token);
       } catch (error) {
         console.error(error);
       }
     }
-    dispatch({ type: ACTIONS.COMPLETE, payload: { id, done: checked } });
+    dispatch({ type: ACTIONS.EDIT, payload: { id, text } });
+  };
+
+  const completeItem = async (id, done) => {
+    if (user) {
+      try {
+        await todoService.completeTodo(id, !done, user.token);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    dispatch({ type: ACTIONS.COMPLETE, payload: { id, done } });
   };
 
   const deleteItem = async (id) => {
@@ -137,7 +150,6 @@ export const useToDoProvider = () => {
       }
     }
     dispatch({ type: ACTIONS.DELETE_ALL });
-
   };
 
   const length = tasks.filter((item) => !item.done).length;
@@ -145,6 +157,7 @@ export const useToDoProvider = () => {
   return {
     createNewItem,
     deleteItem,
+    editItem,
     completeItem,
     length,
     filteredTasks,

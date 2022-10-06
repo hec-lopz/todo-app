@@ -6,6 +6,8 @@ export const Wrapper = styled(ListItemStyle)`
   align-items: center;
   justify-content: space-between;
   position: relative;
+  border-radius: 5px;
+  background-color: ${(props) => props.theme.listItem.background};
   color: ${(props) => props.theme.fontColors.secondary};
 
   @media screen and (min-width: 600px) {

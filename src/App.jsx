@@ -1,21 +1,15 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { GlobalStyle, Wrapper, lightTheme, darkTheme } from "./styles";
 
-import { Authentication } from "./components";
-import { Dashboard } from "./pages/Dashboard";
-
-import { useModal } from "./hooks";
+import { Dashboard, SignUpForm, SignInForm } from "./pages";
 
 export const App = () => {
   const [darkMode, setDarkMode] = useState(false);
-
-
-  const { onOpen, ...state } = useModal();
-
 
   const handleClick = () => setDarkMode(!darkMode);
   return (
@@ -24,13 +18,14 @@ export const App = () => {
         <GlobalStyle />
 
         <ToastContainer autoClose={1000} />
-        <Authentication {...state} />
-        <Dashboard
-          darkMode={darkMode}
-          handleClick={handleClick}
-          onOpen={onOpen}
-        />
-
+        <Router>
+          <Dashboard handleClick={handleClick} />
+          <Routes>
+            <Route path="/" element={null} />
+            <Route path="/login" element={<SignInForm />} />
+            <Route path="/register" element={<SignUpForm />} />
+          </Routes>
+        </Router>
       </Wrapper>
     </ThemeProvider>
   );

@@ -1,11 +1,13 @@
-import { Form, FormGroup, Input, Button, SignUpLink } from "../../styles/Form";
-import { useForm } from "../../hooks";
+import { Form, FormGroup, Input, Button, SignUpLink } from "../styles/Form";
+import { useForm } from "../hooks";
 import { useSelector, useDispatch } from "react-redux";
-import { reset, register } from "../../features/auth/authSlice";
+import { reset, register } from "../features/auth/authSlice";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import Modal from "../components/Modal";
+import { useNavigate } from "react-router";
 
-export const SignUpForm = ({ switchForm, closeModal }) => {
+export const SignUpForm = () => {
   const { data: formData, handleChange } = useForm({
     email: "",
     password: "",
@@ -13,6 +15,7 @@ export const SignUpForm = ({ switchForm, closeModal }) => {
     name: "",
   });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { user, isError, isSuccess, message } = useSelector(
     (state) => state.auth
@@ -20,10 +23,9 @@ export const SignUpForm = ({ switchForm, closeModal }) => {
 
   useEffect(() => {
     if (isError) toast.error(message);
-    if (isSuccess || user) closeModal();
-    console.log("useeffect");
+    if (isSuccess || user) navigate("/");
     dispatch(reset());
-  }, [user, isError, isSuccess, message, dispatch, closeModal]);
+  }, [user, isError, isSuccess, message, dispatch, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,7 +44,7 @@ export const SignUpForm = ({ switchForm, closeModal }) => {
     dispatch(register(userData));
   };
   return (
-    <>
+    <Modal>
       <h3>Sign up with email</h3>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
@@ -84,10 +86,9 @@ export const SignUpForm = ({ switchForm, closeModal }) => {
         <Button>Sign up</Button>
       </Form>
       <span>
-        Already have an account?{" "}
-        <SignUpLink onClick={switchForm}>Sign in</SignUpLink>
+        Already have an account? <SignUpLink to="/login">Sign in</SignUpLink>
       </span>
-    </>
+    </Modal>
   );
 };
 

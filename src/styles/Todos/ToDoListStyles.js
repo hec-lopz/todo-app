@@ -8,6 +8,7 @@ export const StyledSpan = styled.span`
   cursor: pointer;
 `;
 export const StyledLi = styled.li`
+  position: relative;
   border-bottom: 1px solid
     ${(props) =>
       props.darkMode

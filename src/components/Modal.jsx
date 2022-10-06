@@ -1,12 +1,15 @@
 import { createPortal } from "react-dom";
-import { Overlay, Container, CloseButton } from "../../styles/Modal";
+import { Link } from "react-router-dom";
+import { Overlay, Container, CloseButton } from "../styles/Modal";
 
 export const Modal = ({ children, onClose }) => {
   return createPortal(
     <>
       <Overlay />
       <Container>
-        <CloseButton onClick={onClose} />
+        <Link to="/">
+          <CloseButton onClick={onClose} />
+        </Link>
         {children}
       </Container>
     </>,
