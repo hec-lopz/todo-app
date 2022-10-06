@@ -4,6 +4,7 @@ export const Dashboard = ({ handleClick }) => {
   const {
     createNewItem,
     deleteItem,
+    editItem,
     completeItem,
     length,
     filteredTasks,
@@ -16,17 +17,15 @@ export const Dashboard = ({ handleClick }) => {
       <Header handleClick={handleClick} />
       <CreateToDo state={{ createNewItem }} />
       <ToDoList>
-        {filteredTasks.map((item) => (
+        {filteredTasks.map((task) => (
           <ToDoItem
-            text={item.text}
-            id={item._id}
-            key={item._id}
-            checked={item.done}
-            state={{ deleteItem, completeItem }}
+            key={task._id}
+            {...task}
+            state={{ deleteItem, completeItem, editItem }}
           />
         ))}
-        <Filter state={{ length, setFilterOption, filterOption, clearList }} />
       </ToDoList>
+      <Filter state={{ length, setFilterOption, filterOption, clearList }} />
     </>
   );
 };

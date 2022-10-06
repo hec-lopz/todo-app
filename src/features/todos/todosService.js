@@ -46,6 +46,22 @@ const createTodo = async (text, token) => {
   }
 };
 
+/** Edit ToDo
+ * @param {string} id
+ * @param {string} text
+ */
+
+const editTodo = async (id, text, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const res = await instance.put(`/${id}/edit`, { text }, config);
+
+  return res;
+};
+
 /** Complete ToDo
  * @param {string} id
  * @param {boolean} checked
@@ -103,6 +119,7 @@ const clearTodos = async (token) => {
 
 const todoService = {
   getTodos,
+  editTodo,
   createTodo,
   completeTodo,
   deleteTodo,
